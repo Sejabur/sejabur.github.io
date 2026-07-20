@@ -55,7 +55,7 @@ function initScrollAnimations() {
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0, rootMargin: '0px 200px -50px 0px' });
 
     animElements.forEach(el => observer.observe(el));
 }
@@ -79,11 +79,10 @@ function initNativeCarousel() {
     const nextBtnMob = document.querySelector('.mobile-controls .next-btn');
 
     const getScrollAmount = () => {
-        // Slide width + gap
         const slide = track.querySelector('.carousel-slide');
         if (!slide) return 300;
-        const style = window.getComputedStyle(slide);
-        return slide.offsetWidth + parseFloat(style.marginRight || 0) + 32;
+        const gap = parseFloat(window.getComputedStyle(track).gap) || 32;
+        return slide.offsetWidth + gap;
     };
 
     const scrollLeft = () => track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
